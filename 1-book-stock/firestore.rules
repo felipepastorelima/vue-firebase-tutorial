@@ -1,0 +1,340 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /usersAdmins/{document=**} {
+      allow read: if isAuthenticated();
+      allow write: if isCurrentUserAdmin();
+    }
+
+    match /usersPending/{document=**} {
+      allow read: if isCurrentUserAdmin();
+      allow delete: if isCurrentUserAdmin();
+    }
+
+    match /logs/logs/{entity}/{document=**} {
+      allow read: if isAuthenticated() && hasPermission(entity + ':readLogs');
+    }
+
+    match /users {
+      allow read: if isCurrentUserAdmin();
+
+      match /{userId} {
+        allow read: if isCurrentUserAdmin() || isCurrentUser(userId);
+        allow create: if isCurrentUser(userId)
+          && isAuditionValidForCreate(1)
+          && isString('email');
+        allow update: if isCurrentUserAdmin()
+          && isAuditionValidForUpdate(1)
+          && isString('email');
+      }
+
+      match /{userId}/activities/{activity=**} {
+        allow read: if isCurrentUserAdmin() || isCurrentUser(userId);
+      }
+
+      match /{userId}/roles/roles {
+        allow read: if isCurrentUserAdmin() || isCurrentUser(userId);
+        allow write: if isCurrentUserAdmin()
+          && request.resource.data is map;
+      }
+    }
+
+    match /permissions/{permissions=**} {
+      allow read: if isAuthenticated();
+      allow write: if isCurrentUserAdmin();
+    }
+
+    match /roles/{role=**} {
+      allow read: if isCurrentUserAdmin();
+      allow create: if isCurrentUserAdmin()
+        && isAuditionValidForCreate(1)
+        && isString('name');
+      allow update: if isCurrentUserAdmin()
+        && allowedEntityUpdateOrDelete('roles', 1)
+        && isString('name');
+    }
+
+    match /parameters/{document=**} {
+      function isPropertiesValid() {
+        return isNumber('loanPeriodInDays') && min('loanPeriodInDays', 0);
+      }
+
+      allow read: if hasPermission('parameters:read');
+      allow create: if hasPermission('parameters:create')
+        && isAuditionValidForCreate(1)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('parameters', 1)
+        && isPropertiesValid();
+    }
+
+    match /members/{document=**} {
+      function isPropertiesValid() {
+        return isString('name') && maxlength('name', 255)
+        && isString('email') && maxlength('email', 255)
+        && isString('address') && maxlength('address', 255);
+      }
+
+      allow read: if hasPermission('members:read');
+      allow create: if hasPermission('members:create')
+        && isAuditionValidForCreate(3)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('members', 3)
+        && isPropertiesValid();
+    }
+
+    match /authors/{document=**} {
+      function isPropertiesValid() {
+        return isString('name') && maxlength('name', 255);
+      }
+
+      allow read: if hasPermission('authors:read');
+      allow create: if hasPermission('authors:create')
+        && isAuditionValidForCreate(1)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('authors', 1)
+        && isPropertiesValid();
+    }
+
+    match /categories/{document=**} {
+      function isPropertiesValid() {
+        return isString('name') && maxlength('name', 255);
+      }
+
+      allow read: if hasPermission('categories:read');
+      allow create: if hasPermission('categories:create')
+        && isAuditionValidForCreate(1)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('categories', 1)
+        && isPropertiesValid();
+    }
+
+    match /books/{document=**} {
+      function isPropertiesValid() {
+        return isString('isbn') && maxlength('isbn', 13)
+        && isString('name') && maxlength('name', 255)
+        && isValidRelationToOne('author')
+        && isValidRelationToOne('category')
+        && isTimestamp('dateOfPublication')
+        && isNumber('numberOfCopies') && min('numberOfCopies', 0)
+        && (isNull('images') || (isList('images') && maxSize('images', 3)));
+      }
+
+      allow read: if hasPermission('books:read');
+      allow create: if hasPermission('books:create')
+        && isAuditionValidForCreate(7)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('books', 7)
+        && isPropertiesValid();
+    }
+
+    match /booksStocks/{document=**} {
+      allow read: if hasAnyPermission(['books:read', 'loans:read']);
+    }
+
+    match /loans/{document=**} {
+      function isPropertiesValid() {
+        return isValidRelationToOne('book')
+        && isValidRelationToOne('member')
+        && isTimestamp('issueDate')
+        && isTimestamp('dueDate')
+        && (isNull('returnDate') || (isTimestamp('returnDate')));
+      }
+
+      allow read: if hasPermission('loans:read');
+      allow create: if hasPermission('loans:create')
+        && isAuditionValidForCreate(5)
+        && isPropertiesValid();
+      allow update: if allowedEntityUpdateOrDelete('loans', 5)
+        && isPropertiesValid();
+    }
+
+    match /indexes/options/parameters/{document=**} {
+      allow read: if hasAnyPermission(['parameters:read']);
+    }
+
+    match /indexes/foreign/parameters/{document=**} {
+      allow read: if hasPermission('parameters:delete');
+    }
+
+    match /indexes/options/members/{document=**} {
+      allow read: if hasAnyPermission(['members:read', 'loans:create', 'loans:update', 'loans:delete']);
+    }
+
+    match /indexes/foreign/members/{document=**} {
+      allow read: if hasPermission('members:delete');
+    }
+
+    match /indexes/options/authors/{document=**} {
+      allow read: if hasAnyPermission(['authors:read', 'books:create', 'books:update', 'books:delete']);
+    }
+
+    match /indexes/foreign/authors/{document=**} {
+      allow read: if hasPermission('authors:delete');
+    }
+
+    match /indexes/options/categories/{document=**} {
+      allow read: if hasAnyPermission(['categories:read', 'books:create', 'books:update', 'books:delete']);
+    }
+
+    match /indexes/foreign/categories/{document=**} {
+      allow read: if hasPermission('categories:delete');
+    }
+
+    match /indexes/options/books/{document=**} {
+      allow read: if hasAnyPermission(['books:read', 'loans:create', 'loans:update', 'loans:delete']);
+    }
+
+    match /indexes/foreign/books/{document=**} {
+      allow read: if hasPermission('books:delete');
+    }
+
+    match /indexes/options/loans/{document=**} {
+      allow read: if hasAnyPermission(['loans:read']);
+    }
+
+    match /indexes/foreign/loans/{document=**} {
+      allow read: if hasPermission('loans:delete');
+    }
+
+    function allowedEntityUpdateOrDelete(entity, size) {
+      return (
+        (!isLogicalDelete() && isAuditionValidForUpdate(size) && hasPermission(entity + ':update'))
+        || (isLogicalDelete() && isAuditionValidForDelete(size) && hasPermission(entity + ':delete'))
+      );
+    }
+
+    function isValidRelationToOne(property) {
+      return request.resource.data[property].id is string
+        && request.resource.data[property].label is string;
+    }
+
+    function isValidRelationToMany(property) {
+      return request.resource.data[property] is map
+        &&
+        (
+          request.resource.data[property].size() == 0
+          ||
+          (
+            request.resource.data[property].keys()[0] is string
+            && request.resource.data[property].values()[0] is string
+          )
+        );
+    }
+
+    function isNull(property) {
+      return request.resource.data[property] == null;
+    }
+
+    function changed(property) {
+      return request.resource.data[property] != resource.data[property];
+    }
+
+    function isList(property) {
+      return request.resource.data[property] is list;
+    }
+
+    function isString(property) {
+      return request.resource.data[property] is string;
+    }
+
+    function isNumber(property) {
+      return request.resource.data[property] is number;
+    }
+
+    function isBoolean(property) {
+      return request.resource.data[property] is bool;
+    }
+
+    function isMap(property) {
+      return request.resource.data[property] is map;
+    }
+
+    function isTimestamp(property) {
+      return request.resource.data[property] is timestamp;
+    }
+
+    function maxSize(property, value) {
+      return request.resource.data[property].size() <= value;
+    }
+
+    function maxlength(property, value) {
+      return request.resource.data[property].size() <= value;
+    }
+
+    function minlength(property, value) {
+      return request.resource.data[property].size() >= value;
+    }
+
+    function max(property, value) {
+      return request.resource.data[property] <= value;
+    }
+
+    function min(property, value) {
+      return request.resource.data[property] >= value;
+    }
+
+    function isAuditionValidForUpdate(size) {
+      return request.resource.data.keys().hasAll(['createdAt', 'createdBy', 'updatedAt', 'updatedBy'])
+        && request.resource.data.size() == (size + 4)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.updatedAt is timestamp
+        && isCurrentUser(request.resource.data.updatedBy);
+    }
+
+    function isAuditionValidForDelete(size) {
+      return request.resource.data.keys().hasAll(['createdAt', 'createdBy', 'updatedAt', 'updatedBy', 'deletedAt', 'deletedBy'])
+        && request.resource.data.size() == (size + 6)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.updatedAt is timestamp
+        && isCurrentUser(request.resource.data.updatedBy)
+        && request.resource.data.deletedAt is timestamp
+        && isCurrentUser(request.resource.data.deletedBy);
+    }
+
+    function isAuditionValidForCreate(size) {
+      return request.resource.data.keys().hasAll(['createdAt', 'createdBy', 'updatedAt', 'updatedBy'])
+        && request.resource.data.size() == (size + 4)
+        && request.resource.data.createdAt is timestamp
+        && isCurrentUser(request.resource.data.createdBy)
+        && request.resource.data.updatedAt is timestamp
+        && isCurrentUser(request.resource.data.updatedBy);
+    }
+
+    function isLogicalDelete() {
+      return request.resource.data.keys().hasAny(['deletedBy', 'deletedAt']);
+    }
+
+    function isCurrentUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isCurrentUserAdmin() {
+      return isAuthenticated() && isAdmin(request.auth.uid);
+    }
+
+    function isAdmin(userId) {
+      return exists(/databases/$(database)/documents/usersAdmins/$(userId));
+    }
+
+    function hasPermission(permission) {
+      return isCurrentUserAdmin() || (isAuthenticated() && hasCustomPermission(permission));
+    }
+
+    function hasAnyPermission(permissions) {
+      return isCurrentUserAdmin() || (isAuthenticated() && hasAnyCustomPermissions(permissions));
+    }
+
+    function hasCustomPermission(permission) {
+      return hasAnyCustomPermissions([permission]);
+    }
+
+    function hasAnyCustomPermissions(permissions) {
+      return get(/databases/$(database)/documents/permissions/all).data.keys().hasAny((request.auth.uid + ':' + (permissions.join('::' + request.auth.uid + ':'))).split('::'));
+    }
+  }
+}
