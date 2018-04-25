@@ -1,0 +1,597 @@
+{
+    "entities": [
+      {
+        "id": "c568f3d3-5c42-4db9-a52a-d794ac958f56",
+        "name": {
+          "singular": "parameter",
+          "plural": "parameters"
+        },
+        "label": {
+          "singular": "Parameter",
+          "plural": "Parameters"
+        },
+        "properties": {
+          "datagrid_created": "no",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "a19cd8ee-1401-4897-8b11-4b0f5019e0b3"
+        },
+        "fields": [
+          {
+            "id": "a19cd8ee-1401-4897-8b11-4b0f5019e0b3",
+            "name": {
+              "singular": "loanPeriodInDays",
+              "plural": "loanPeriodInDays"
+            },
+            "label": {
+              "singular": "Loan Period (in days)",
+              "plural": "Loan Period (in days)"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "f5907642-b58c-4348-805e-4b1f48b535d1",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "4c7b0450-cebf-4f63-a354-28ca29616a71",
+                "key": "min",
+                "value": 0
+              }
+            ],
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "id": "3a22d07f-a226-4613-a9fc-3270f3cccdff",
+        "name": { "singular": "member", "plural": "members" },
+        "label": {
+          "singular": "Member",
+          "plural": "Members"
+        },
+        "properties": {
+          "datagrid_created": "yes",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "016145fd-eb24-4b62-9828-fb2d5171efd3"
+        },
+        "fields": [
+          {
+            "id": "016145fd-eb24-4b62-9828-fb2d5171efd3",
+            "name": { "singular": "name", "plural": "names" },
+            "label": {
+              "singular": "Name",
+              "plural": "Names"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "df7fddc1-4b6b-4ed5-803a-579b1ab2d1b5",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "d7a5c2d7-da11-41dc-b334-b6777f41730e",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "id": "c9454605-7504-408a-bb4b-d4ffe95cc9e1",
+            "name": {
+              "singular": "address",
+              "plural": "addresses"
+            },
+            "label": {
+              "singular": "Address",
+              "plural": "Addresses"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 2
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "4931d67d-b83a-453c-9fba-3e4c772914cc",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "78781fcf-0d5d-4958-acd4-f2987bb13200",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "id": "828a1b08-60c3-4e3f-aebe-236e4eff7d6f",
+            "name": {
+              "singular": "email",
+              "plural": "emails"
+            },
+            "label": {
+              "singular": "Email",
+              "plural": "Emails"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 1
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "3cc15a22-e2c4-4f55-a30b-22e929bf329d",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "a94e3c1a-bd50-4b30-bd61-5b7ce84d8672",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "b8ae3bb6-345b-4f7b-9a2c-6bbb22a6d768",
+        "name": { "singular": "author", "plural": "authors" },
+        "label": {
+          "singular": "Author",
+          "plural": "Authors"
+        },
+        "properties": {
+          "datagrid_created": "no",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "0a04b587-f4d1-4246-b75f-2b84eab77123"
+        },
+        "fields": [
+          {
+            "id": "0a04b587-f4d1-4246-b75f-2b84eab77123",
+            "name": { "singular": "name", "plural": "names" },
+            "label": {
+              "singular": "Name",
+              "plural": "Names"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "090a7ccb-598e-405c-a7b1-1a1af7f8c636",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "d22ce62b-7714-43e1-bb40-d2c95fb547d0",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "e0bc4fd5-8187-4024-bd71-822a9db282f2",
+        "name": {
+          "singular": "category",
+          "plural": "categories"
+        },
+        "label": {
+          "singular": "Category",
+          "plural": "Categories"
+        },
+        "properties": {
+          "datagrid_created": "no",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "e39f5d86-2148-4fa1-82ab-990223d12b9b"
+        },
+        "fields": [
+          {
+            "id": "e39f5d86-2148-4fa1-82ab-990223d12b9b",
+            "name": { "singular": "name", "plural": "names" },
+            "label": {
+              "singular": "Name",
+              "plural": "Names"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "no",
+              "exportable": "no",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "2b24a555-f26c-40e3-a9cc-0aac2c4e08eb",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "2a1086d4-359e-46c6-97b3-b3e74b45e4d4",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "f085d194-7a21-4241-b00b-fb50b60a3be5",
+        "name": { "singular": "book", "plural": "books" },
+        "label": { "singular": "Book", "plural": "Books" },
+        "properties": {
+          "datagrid_created": "no",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "dfce142d-55c9-4303-9b81-fc7160c3219d"
+        },
+        "fields": [
+          {
+            "id": "78aeec69-2821-48c5-b4dc-3f4ae1100a94",
+            "name": { "singular": "isbn", "plural": "isbns" },
+            "label": {
+              "singular": "ISBN",
+              "plural": "ISBNS"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "6debacc1-8017-4867-ac64-c3017395b6af",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "0b0fb69d-5b3a-42a2-9509-7526d5fc1ccc",
+                "key": "maxlength",
+                "value": 13
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "id": "dfce142d-55c9-4303-9b81-fc7160c3219d",
+            "name": { "singular": "name", "plural": "names" },
+            "label": {
+              "singular": "Name",
+              "plural": "Names"
+            },
+            "properties": {
+              "textarea": "no",
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "bdd07b49-2f4f-4cbe-8a60-f28697404a1c",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "1e785e95-f2b0-41cc-9bda-31de670153b9",
+                "key": "maxlength",
+                "value": 255
+              }
+            ],
+            "type": "text"
+          },
+          {
+            "id": "a6d49afc-eb55-44a1-a803-9f93e84f53b4",
+            "name": {
+              "singular": "author",
+              "plural": "authors"
+            },
+            "label": {
+              "singular": "Author",
+              "plural": "Authors"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {
+              "entity": "b8ae3bb6-345b-4f7b-9a2c-6bbb22a6d768"
+            },
+            "validations": [
+              {
+                "id": "3bc1b327-33be-4dd3-b7b6-3140c42aecae",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "has_one"
+          },
+          {
+            "id": "6fd05c3b-5c26-43c6-be49-7abc64a0d0aa",
+            "name": {
+              "singular": "category",
+              "plural": "categories"
+            },
+            "label": {
+              "singular": "Category",
+              "plural": "Categories"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {
+              "entity": "e0bc4fd5-8187-4024-bd71-822a9db282f2"
+            },
+            "validations": [
+              {
+                "id": "15c66f88-3a74-4cec-b2fe-386c4418e5c2",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "has_one"
+          },
+          {
+            "id": "51d133a0-a897-434c-bcd2-6b30d3750d3f",
+            "name": {
+              "singular": "dateOfPublication",
+              "plural": "dateOfPublications"
+            },
+            "label": {
+              "singular": "Date of Publication",
+              "plural": "Date of Publications"
+            },
+            "properties": {
+              "list": "no",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "26480d2e-5762-4172-8554-8f0f69a4d21a",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "date"
+          },
+          {
+            "id": "a9bd4bbf-7862-4e8a-bf49-ca03e102c4ac",
+            "name": {
+              "singular": "numberOfCopies",
+              "plural": "numberOfCopies"
+            },
+            "label": {
+              "singular": "Number of Copies",
+              "plural": "Number of Copies"
+            },
+            "properties": {
+              "list": "no",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "9bb3311a-489e-41a0-82fb-064510cf251b",
+                "key": "required",
+                "value": true
+              },
+              {
+                "id": "aa026021-8d7a-4f8e-9880-27093f8ca3ec",
+                "key": "min",
+                "value": 0
+              }
+            ],
+            "type": "integer"
+          },
+          {
+            "id": "cc587df4-0677-4913-a134-06140f5f752b",
+            "name": {
+              "singular": "image",
+              "plural": "images"
+            },
+            "label": {
+              "singular": "Image",
+              "plural": "Images"
+            },
+            "properties": { "priority": 0 },
+            "relation": {},
+            "validations": [
+              {
+                "id": "4710405e-8608-4604-ac9b-6bd11c38504f",
+                "key": "size",
+                "value": 100000
+              },
+              {
+                "id": "0d714d96-9171-4d40-a0e3-37b4f80ad5b1",
+                "key": "max",
+                "value": 3
+              }
+            ],
+            "type": "images"
+          }
+        ]
+      },
+      {
+        "id": "8e59f6d6-1520-4850-b1e1-6a2ce866dcba",
+        "name": {
+          "singular": "loan",
+          "plural": "loans"
+        },
+        "label": {
+          "singular": "Loan",
+          "plural": "Loans"
+        },
+        "properties": {
+          "datagrid_created": "no",
+          "datagrid_updated": "no",
+          "priority": 0,
+          "display": "4524ea7b-e422-46d1-9db8-579914adf847"
+        },
+        "fields": [
+          {
+            "id": "9874acbf-3fb3-4713-834c-1836af2017aa",
+            "name": { "singular": "book", "plural": "books" },
+            "label": {
+              "singular": "Book",
+              "plural": "Books"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {
+              "entity": "f085d194-7a21-4241-b00b-fb50b60a3be5"
+            },
+            "validations": [
+              {
+                "id": "a636c241-fabb-49fa-bced-c928b6b03cc1",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "has_one"
+          },
+          {
+            "id": "d3a7a027-b080-4a8a-afeb-6f58179512d1",
+            "name": {
+              "singular": "member",
+              "plural": "members"
+            },
+            "label": {
+              "singular": "Member",
+              "plural": "Members"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {
+              "entity": "3a22d07f-a226-4613-a9fc-3270f3cccdff"
+            },
+            "validations": [
+              {
+                "id": "47f9dd1b-bf28-4549-8bf9-c4e63eba1341",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "has_one"
+          },
+          {
+            "id": "4524ea7b-e422-46d1-9db8-579914adf847",
+            "name": {
+              "singular": "issueDate",
+              "plural": "issueDates"
+            },
+            "label": {
+              "singular": "Issue Date",
+              "plural": "Issue Dates"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "9b1ceaac-56b8-431c-bc2a-27969c6b6d91",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "date"
+          },
+          {
+            "id": "9205354c-4c25-467e-926d-7c6367bb7809",
+            "name": {
+              "singular": "dueDate",
+              "plural": "dueDates"
+            },
+            "label": {
+              "singular": "Due Date",
+              "plural": "Due Dates"
+            },
+            "properties": {
+              "list": "yes",
+              "exportable": "yes"
+            },
+            "relation": {},
+            "validations": [
+              {
+                "id": "7b3082b7-fb83-42e6-b197-8932c6e80fc2",
+                "key": "required",
+                "value": true
+              }
+            ],
+            "type": "date"
+          },
+          {
+            "id": "383cd409-54ac-4e9a-ae69-dda7d7e66370",
+            "name": {
+              "singular": "returnDate",
+              "plural": "returnDates"
+            },
+            "label": {
+              "singular": "Return Date",
+              "plural": "Return Dates"
+            },
+            "properties": {
+              "list": "no",
+              "exportable": "yes",
+              "priority": 0
+            },
+            "relation": {},
+            "validations": [],
+            "type": "date"
+          }
+        ]
+      }
+    ],
+    "properties": {
+      "theme_color": "#D93644",
+      "application_logo": "Library Management"
+    }
+  }
+  
